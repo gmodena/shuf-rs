@@ -57,8 +57,8 @@ where I: Iterator<Item = Result<String>>
 {
     let mut rng = rand::thread_rng();
     let mut reservoir: Vec<String> = Vec::with_capacity(items);
-    /// TODO(gmodena, 2019-10-26) - think about an efficient way to copy first n items from iterator
-    ///                             into the reservoir .
+    // TODO(gmodena, 2019-10-26) - think about an efficient way to copy first n items from iterator
+    //                             into the reservoir .
     for (i, item) in input.enumerate() {
         match item  {
             Ok(valid) => {
@@ -149,5 +149,11 @@ fn main() -> io::Result<()> {
 
 #[cfg(test)]
 mod tests {
+    use super::read_from_iter;
+    use std::io::{BufReader, BufRead};
 
+    #[test]
+    fn test_read_from_iter() {
+        assert_eq!(0, 0);
+    }
 }
