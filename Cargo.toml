@@ -1,0 +1,9 @@
+[package]
+name = "shuf-rs"
+version = "0.1.0"
+authors = ["Gabriele Modena <gmodena@pm.me>"]
+edition = "2018"
+
+[dependencies]
+rand = "0.6.5"
+structopt = { version = "0.2", default-features = false }
