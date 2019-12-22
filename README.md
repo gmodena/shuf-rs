@@ -1,6 +1,16 @@
 # shuf-rs
 
-## Usage
+Shuffle lines of text with reservior sampling.
+
+# Build
+
+```
+cargo build
+```
+
+The resulting binary is found under `target`.
+
+# Usage
 
 ```
 USAGE:
