@@ -151,17 +151,29 @@ fn main() -> io::Result<()> {
 
 #[cfg(test)]
 mod tests {
+    use super::sample_from_iter;
     use super::read_from_iter;
     use std::io::{BufReader, BufRead};
 
     #[test]
+    fn test_sample_from_iter() {
+        let n = 10;
+        let  items: Vec<Result<usize, std::io::Error>> = (0..100).map(
+            |_| { Ok(rand::random::<usize>()) }).collect();
+
+        let shuffled = sample_from_iter(items.into_iter(), n);
+
+        assert_eq!(shuffled.unwrap().len(), n);
+    }
+
+    #[test]
     fn test_read_from_iter() {
-//        let stuff= vec![Ok("a".to_string()),
-//                         Ok("b".to_string()),
-//                         Ok("c".to_string()), Err];
-//
-//        let shuffled = read_from_iter(stuff.iter());
-//
-//        assert_eq!(stuff.len(), 3);
+        let n = 100;
+        let  items: Vec<Result<usize, std::io::Error>> = (0..n).map(
+            |_| { Ok(rand::random::<usize>()) }).collect();
+
+        let shuffled = read_from_iter(items.into_iter());
+
+        assert_eq!(shuffled.unwrap().len(), n);
     }
 }
