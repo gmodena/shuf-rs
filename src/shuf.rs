@@ -6,7 +6,7 @@ use std::io::{BufRead, BufReader};
 use rand::seq::SliceRandom;
 use std::path::Path;
 
-trait IntoReader {
+pub trait IntoReader {
     type OutReader: Read;
 
     fn into_reader(self) -> Self::OutReader;
@@ -30,7 +30,7 @@ impl<'a> IntoReader for StdinLock<'a> {
 
 /// Returns a random permutation of an Iterable [`input`].
 /// The whole Iterator needs to be consumed before permuting.
-fn read_from_iter<T, E, I>(input: I) -> Result<Vec<T>, E>
+pub fn read_from_iter<T, E, I>(input: I) -> Result<Vec<T>, E>
     where I: Iterator<Item = Result<T, E>>
 {
     let mut rng = thread_rng();
@@ -49,7 +49,7 @@ fn read_from_iter<T, E, I>(input: I) -> Result<Vec<T>, E>
 }
 
 /// Returns a random permutation of [`items`] elements from an Iterable [`input`].
-fn sample_from_iter<T, E, I>(input: I, items: usize) -> Result<Vec<T>, E>
+pub fn sample_from_iter<T, E, I>(input: I, items: usize) -> Result<Vec<T>, E>
     where
         I: Iterator<Item = Result<T, E>>
 {
@@ -73,32 +73,7 @@ fn sample_from_iter<T, E, I>(input: I, items: usize) -> Result<Vec<T>, E>
     Ok(reservoir)
 }
 
-pub struct Shuffler {
-    num: Option<usize>,
-}
 
-impl Shuffler {
-    pub fn new() -> Shuffler {
-        Shuffler {
-            num: None,
-        }
-    }
-
-    pub fn with_num<'a>(&'a mut self, arg: usize) -> &'a mut Shuffler {
-        self.num = Some(arg);
-        self
-    }
-
-    pub fn shuffle<I>(&mut self, data: I) -> Result<Vec<String>, std::io::Error>
-        where I: IntoReader, I:: OutReader: Read {
-        let local = BufReader::new(data.into_reader());
-
-        match self.num {
-            Some(n) => sample_from_iter(local.lines(), n),
-            None => read_from_iter(local.lines())
-        }
-    }
-}
 
 #[cfg(test)]
 mod tests {

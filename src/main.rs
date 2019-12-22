@@ -3,6 +3,9 @@ extern crate rand;
 use std::io;
 use structopt::StructOpt;
 use std::path::Path;
+use std::io::{BufRead, BufReader};
+use std::io::{Read, StdinLock};
+
 
 mod shuf;
 
@@ -16,10 +19,37 @@ struct Cli {
     path: Option<std::path::PathBuf>
 }
 
+pub struct Shuffler {
+    num: Option<usize>,
+}
+
+impl Shuffler {
+    pub fn new() -> Shuffler {
+        Shuffler {
+            num: None,
+        }
+    }
+
+    pub fn with_num<'a>(&'a mut self, arg: usize) -> &'a mut Shuffler {
+        self.num = Some(arg);
+        self
+    }
+
+    pub fn shuffle<I>(&mut self, data: I) -> Result<Vec<String>, std::io::Error>
+        where I: shuf::IntoReader, I:: OutReader: Read {
+        let local = BufReader::new(data.into_reader());
+
+        match self.num {
+            Some(n) => shuf::sample_from_iter(local.lines(), n),
+            None => shuf::read_from_iter(local.lines())
+        }
+    }
+}
+
 fn main() -> io::Result<()> {
     let args = Cli::from_args();
 
-    let mut s = shuf::Shuffler::new();
+    let mut s = Shuffler::new();
 
     if args.num.is_some() {
         s.with_num(args.num.unwrap());
