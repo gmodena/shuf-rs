@@ -6,7 +6,4 @@ edition = "2018"
 
 [dependencies]
 rand = "0.6.5"
-log = "0.4"
 structopt = { version = "0.2", default-features = false }
-regex = "1"
-lazy_static = "1.4.0"
