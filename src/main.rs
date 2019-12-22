@@ -17,7 +17,7 @@ use std::io::{self, Read, StdinLock};
 use rand::Rng;
 use rand::thread_rng;
 use std::fs::File;
-use std::io::{BufRead, BufReader, Result};
+use std::io::{BufRead, BufReader};
 use structopt::StructOpt;
 use rand::seq::SliceRandom;
 use std::path::Path;
@@ -34,29 +34,31 @@ struct Cli {
 
 /// Returns a random permutation of an Iterable [`input`].
 /// The whole Iterator needs to be consumed before permuting.
-fn read_from_iter<I>(input: I) -> Result<Vec<String>>
-    where I: Iterator<Item = Result<String>> {
+fn read_from_iter<T, E, I>(input: I) -> Result<Vec<T>, E>
+    where I: Iterator<Item = Result<T, E>>
+{
     let mut rng = thread_rng();
-    let mut items: Vec<String> = Vec::new();
+    let mut items: Vec<T> = Vec::new();
 
     for item in input {
         match item {
             Ok(valid) => {
                 items.push(valid)
             }
-            Err(e) => panic!("Invalid input {:?}", e)
+            Err(e) => panic!("Invalid input")
         }
     }
     items.shuffle(&mut rng);
-    return Ok(items);
+    Ok(items)
 }
 
 /// Returns a random permutation of [`items`] elements from an Iterable [`input`].
-fn sample_from_iter<I>(input: I, items: usize) -> Result<Vec<String>>
-where I: Iterator<Item = Result<String>>
+fn sample_from_iter<T, E, I>(input: I, items: usize) -> Result<Vec<T>, E>
+where
+    I: Iterator<Item = Result<T, E>>
 {
     let mut rng = rand::thread_rng();
-    let mut reservoir: Vec<String> = Vec::with_capacity(items);
+    let mut reservoir: Vec<T> = Vec::with_capacity(items);
     // TODO(gmodena, 2019-10-26) - think about an efficient way to copy first n items from iterator
     //                             into the reservoir .
     for (i, item) in input.enumerate() {
@@ -69,10 +71,10 @@ where I: Iterator<Item = Result<String>>
                     reservoir[j] = valid;
                 }
             }
-            Err(e) => panic!("Invalid input {:?}", e)
+            Err(e) => panic!("Invalid input")
         }
     }
-    return Ok(reservoir);
+    Ok(reservoir)
 }
 
 trait IntoReader {
@@ -113,7 +115,7 @@ impl Shuffler {
         self
     }
 
-    pub fn shuffle<I>(&mut self, data: I) -> Result<Vec<String>>
+    pub fn shuffle<I>(&mut self, data: I) -> Result<Vec<String>, std::io::Error>
         where I: IntoReader, I:: OutReader: Read {
         let local = BufReader::new(data.into_reader());
 
@@ -139,7 +141,7 @@ fn main() -> io::Result<()> {
     };
 
 
-    for s in sample.ok().expect("Invalid record") {
+    for s in sample.expect("Invalid record") {
         println!("{}", s);
     }
 
@@ -154,6 +156,12 @@ mod tests {
 
     #[test]
     fn test_read_from_iter() {
-        assert_eq!(0, 0);
+//        let stuff= vec![Ok("a".to_string()),
+//                         Ok("b".to_string()),
+//                         Ok("c".to_string()), Err];
+//
+//        let shuffled = read_from_iter(stuff.iter());
+//
+//        assert_eq!(stuff.len(), 3);
     }
 }
