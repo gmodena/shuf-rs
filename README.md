@@ -1,4 +1,4 @@
-https://github.com/gmodena/shuf-rs/workflows/Build%20and%20test/badge.svg
+![](https://github.com/gmodena/shuf-rs/workflows/Build%20and%20test/badge.svg)
 
 # shuf-rs
 
