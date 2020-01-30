@@ -4,7 +4,7 @@ use std::io;
 use structopt::StructOpt;
 use std::path::Path;
 use std::io::{BufRead, BufReader};
-use std::io::{Read, StdinLock};
+use std::io::Read;
 
 
 mod shuf;

@@ -2,7 +2,6 @@ use std::io::{Read, StdinLock};
 use rand::Rng;
 use rand::thread_rng;
 use std::fs::File;
-use std::io::{BufRead, BufReader};
 use rand::seq::SliceRandom;
 use std::path::Path;
 
