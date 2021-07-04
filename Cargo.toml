@@ -1,6 +1,6 @@
 [package]
-name = "shuf-rs"
-version = "0.1.0"
+name = "shuf"
+version = "0.1.1"
 authors = ["Gabriele Modena <gmodena@pm.me>"]
 edition = "2018"
 
