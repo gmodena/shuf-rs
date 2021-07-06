@@ -2,21 +2,22 @@
 
 # shuf-rs
 
-Shuffle lines of text with reservior sampling.
+Shuffle lines of text with [reservior sampling](https://en.wikipedia.org/wiki/Reservoir_sampling).
+
 
 # Build
 
 ```
-cargo build
+cargo build --release
 ```
 
-The resulting binary is found under `target`.
+The resulting binary is found under `target/release/shuf`.
 
 # Usage
 
 ```
 USAGE:
-    shuf-rs [OPTIONS] [path]
+    shuf [OPTIONS] [path]
 
 FLAGS:
     -h, --help       Prints help information
@@ -28,3 +29,7 @@ OPTIONS:
 ARGS:
     <path>    The path to the file to read
 ```
+
+# mod shuf
+
+`src/shuf.rs` contains a reusable implementation of reservior sampling, that works on any iterable.
