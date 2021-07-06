@@ -29,6 +29,10 @@ impl<'a> IntoReader for StdinLock<'a> {
 
 /// Returns a random permutation of an Iterable [`input`].
 /// The whole Iterator needs to be consumed before permuting.
+///
+/// # Arguments
+///
+/// * `input` - an Iterable.
 pub fn read_from_iter<T, E, I>(input: I) -> Result<Vec<T>, E>
     where I: Iterator<Item = Result<T, E>>
 {
@@ -48,6 +52,11 @@ pub fn read_from_iter<T, E, I>(input: I) -> Result<Vec<T>, E>
 }
 
 /// Returns a random permutation of [`items`] elements from an Iterable [`input`].
+///
+/// # Arguments
+///
+/// * `input` - an Iterable
+/// * `items` - number of elements to sample (the reservoir size).
 pub fn sample_from_iter<T, E, I>(input: I, items: usize) -> Result<Vec<T>, E>
     where
         I: Iterator<Item = Result<T, E>>

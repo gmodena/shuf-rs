@@ -24,17 +24,26 @@ pub struct Shuffler {
 }
 
 impl Shuffler {
+    /// Returns a Shuffler structure that can either generate random permutations
+    /// a whole iterable, or select `num` items with reservoir sampling.
     pub fn new() -> Shuffler {
         Shuffler {
             num: None,
         }
     }
 
+    /// Builder method used to set the `num` attribute.
     pub fn with_num<'a>(&'a mut self, arg: usize) -> &'a mut Shuffler {
         self.num = Some(arg);
         self
     }
 
+    /// Generate random permutations of `data`. Select `num` items with reservoir sampling, or 
+    /// permute the whole iterable if `num` is None.
+    ///
+    /// # Arguments
+    ///
+    /// * `data` - an iterable
     pub fn shuffle<I>(&mut self, data: I) -> Result<Vec<String>, std::io::Error>
         where I: shuf::IntoReader, I:: OutReader: Read {
         let local = BufReader::new(data.into_reader());
