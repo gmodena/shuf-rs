@@ -3,6 +3,11 @@ name = "shuf-rs"
 version = "0.1.0"
 authors = ["Gabriele Modena <gmodena@pm.me>"]
 edition = "2018"
+description = "Generate random permutations of an iterable with reservior sampling"
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/gmodena/shuf-rs/"
+repository = "https://github.com/gmodena/shuf-rs/"
 
 [dependencies]
 rand = "0.6.5"
