@@ -68,7 +68,7 @@ pub fn sample_from_iter<T, E, I>(input: I, items: usize) -> Result<Vec<T>, E>
     for (i, item) in input.enumerate() {
         match item  {
             Ok(valid) => {
-                let j = rng.gen_range(0, i+1);
+                let j = rng.gen_range(0..i+1);
                 if i < items {
                     reservoir.push(valid);
                 } else if j < items {
