@@ -1,6 +1,6 @@
 [package]
 name = "shuf"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Gabriele Modena <gmodena@pm.me>"]
 edition = "2021"
 description = "Generate random permutations of an iterable with reservior sampling"
@@ -12,5 +12,5 @@ categories = ["command-line-utilities"]
 exclude = [".github/*"]
 
 [dependencies]
-rand = "0.6.5"
-structopt = { version = "0.2", default-features = false }
+rand = "0.8.5"
+structopt = { version = "0.3.26", default-features = false }
