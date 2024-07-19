@@ -1,5 +1,5 @@
 [package]
-name = "shuf"
+name = "shuf-rs"
 version = "0.2.0"
 authors = ["Gabriele Modena <gmodena@pm.me>"]
 edition = "2021"
